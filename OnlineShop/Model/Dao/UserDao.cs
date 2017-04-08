@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace Model.Dao
         public UserDao()
         {
             db = new OnlineShopDbContext();
+        }
+
+        public IEnumerable<User> ListAllPaging(int page,int pageSize)
+        {
+            return db.Users.OrderBy(x=>x.CreateDate).ToPagedList(page, pageSize);
         }
 
         public long Insert(User entity)

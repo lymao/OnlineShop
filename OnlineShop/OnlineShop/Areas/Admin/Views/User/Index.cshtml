@@ -1,0 +1,44 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.EF.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Bordered Table</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Tên</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.UserName</td>
+                            <td>@item.Name</td>
+                            <td>@item.Address</td>
+                            <td>@item.Status</td>
+                            <td>
+                                <a href="/User/Edit/@item.ID">Sửa</a>
+                                <a href="/User/Delete/@item.ID">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                    
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>
