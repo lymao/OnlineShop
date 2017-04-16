@@ -56,5 +56,33 @@ namespace Model.Dao
                 }
             }
         }
+
+        public User ViewDetail(int id)
+        {
+            return db.Users.Find(id);
+        }
+
+        public bool Update(User entity)
+        {
+            try
+            {
+                var user = db.Users.Find(entity.ID);
+                user.Name = entity.Name;
+                if (!string.IsNullOrEmpty(entity.Password))
+                {
+                    user.Password = entity.Password;
+                }
+                user.Address = entity.Address;
+                user.Email = entity.Email;
+                user.ModifiedBy = entity.ModifiedBy;
+                user.ModifiedDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
