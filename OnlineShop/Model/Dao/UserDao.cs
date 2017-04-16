@@ -84,5 +84,13 @@ namespace Model.Dao
                 return false;
             }
         }
+
+        public bool Delete(int id)
+        {
+            var user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return true;
+        }
     }
 }
