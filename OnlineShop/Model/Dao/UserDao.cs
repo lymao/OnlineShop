@@ -17,9 +17,14 @@ namespace Model.Dao
             db = new OnlineShopDbContext();
         }
 
-        public IEnumerable<User> ListAllPaging(int page,int pageSize)
+        public IEnumerable<User> ListAllPaging(string keyword,int page,int pageSize)
         {
-            return db.Users.OrderBy(x=>x.CreateDate).ToPagedList(page, pageSize);
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                model = model.Where(x => x.UserName.Contains(keyword) || x.Name.Contains(keyword));
+            }
+            return model.OrderByDescending(x=>x.CreateDate).ToPagedList(page, pageSize);
         }
 
         public long Insert(User entity)

@@ -12,10 +12,11 @@ namespace OnlineShop.Areas.Admin.Controllers
     public class UserController : Controller
     {
         // GET: Admin/User
-        public ActionResult Index(int page = 1, int pageSize = 3)
+        public ActionResult Index(string keyword, int page = 1, int pageSize = 3)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(page, pageSize);
+            ViewBag.keyword = keyword;
+            var model = dao.ListAllPaging(keyword,page, pageSize);
             return View(model);
         }
 
